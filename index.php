@@ -15,16 +15,34 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Aquí se definen los textos del complemento.
+ * Este archivo contiene la pagina principal.
  *
  * @package     local_informe
- * @category    string
  * @copyright   2023 Pilar Laborda <pilarlabordadaw@gmail.com>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once('../../config.php');
 
-$string['pluginname'] = 'Informe';
-$string['subtitulo'] = 'Informe de duración del curso por Grupo Formativo';
-$string['generadopor'] = 'Generado por: {$a}.';
+$context = context_system::instance();
+$PAGE->set_context($context);
+
+$PAGE->set_url(new moodle_url('/local/informe/index.php'));
+
+$PAGE->set_pagelayout('standard');
+$PAGE->set_title($SITE->fullname);
+
+$PAGE->set_heading(get_string('pluginname', 'local_informe'));
+
+echo $OUTPUT->header();
+
+if (isloggedin()) {
+
+    echo get_string('subtitulo', 'local_informe');
+    echo '<br/>';
+    echo get_string('generadopor', 'local_informe', fullname($USER));
+    echo '<br/>Fecha: ';
+    echo userdate(time(), get_string('strftimedaydate', 'core_langconfig'));
+}
+
+echo $OUTPUT->footer();
