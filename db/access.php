@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Aquí se definen los textos del complemento.
+ * Plugin strings are defined here.
  *
  * @package     local_informe
  * @category    string
@@ -25,16 +25,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Informe Personalizado';
-$string['subtitulo'] = 'Informe de duración del curso por Grupo Formativo';
-$string['generadopor'] = 'Generado por: {$a}.';
-
-$string['noadmin'] = 'Usuario no autorizado';
-$string['usuario'] = '{$a}';
-
-$string['selec_curso'] = 'Selecciona un curso';
-$string['selec_grupo'] = 'Selecciona un grupo formativo';
-$string['generar'] = 'Generar informe';
-
-$string['informe:generarinforme'] = 'Generar informe de duración y grupo formativo';
-
+$capabilities = array(
+        'local/informe:generarinforme' => array(
+                'riskbitmask' => RISK_SPAM,
+                'captype' => 'read',
+                'contextlevel' => CONTEXT_SYSTEM,
+                'archetypes' => array(
+                        'user' => CAP_ALLOW,
+                )
+        ),
+);

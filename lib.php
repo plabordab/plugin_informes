@@ -26,7 +26,6 @@
  * Inserta un enlace a index.php en el menú de navegación de la página principal del sitio.
  * @param navigation_node $frontpage Nodo que representa la página principal en el árbol de navegación.
  */
-
 function local_informe_extend_navigation_frontpage(navigation_node $frontpage) {
     $frontpage->add(
             get_string('pluginname', 'local_informe'),
@@ -40,7 +39,7 @@ function local_informe_extend_navigation_frontpage(navigation_node $frontpage) {
  * @param global_navigation $root global_navigation extiende navigation_node por lo que todos los métodos
  * y propiedades del nodo de navegación que no se anulen a continuación estarán disponibles
  */
-function local_informe_extend_navigation(global_navigation $root){
+function local_informe_extend_navigation(global_navigation $root) {
     $node = navigation_node::create(
             get_string('pluginname', 'local_informe'),
             new moodle_url('/local/informe/index.php'),

@@ -34,12 +34,17 @@ $PAGE->set_title($SITE->fullname);
 
 $PAGE->set_heading(get_string('pluginname', 'local_informe'));
 
+require_login();
+if (isguestuser()) {
+    throw new moodle_exception('noguest');
+}
 echo $OUTPUT->header();
+
+$allowgenerate = has_capability('local/informe:generarinforme', $context);
 
 $cuerpoform = new \local_informe\form\cuerpo_form();
 
 if (isloggedin()) {
-
     echo get_string('subtitulo', 'local_informe');
     echo '<br/>';
     echo get_string('generadopor', 'local_informe', fullname($USER));
@@ -47,5 +52,10 @@ if (isloggedin()) {
     echo userdate(time(), get_string('strftimedaydate', 'core_langconfig'));
 }
 
-$cuerpoform->display();
+if ($allowgenerate) {
+
+
+    $cuerpoform->display();
+}
+
 echo $OUTPUT->footer();
