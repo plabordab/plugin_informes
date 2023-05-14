@@ -25,6 +25,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Informe';
+$string['pluginname'] = 'Informe Personalizado';
 $string['subtitulo'] = 'Informe de duración del curso por Grupo Formativo';
 $string['generadopor'] = 'Generado por: {$a}.';
+
+$string['noadmin'] = 'Usuario no autorizado';
+$string['usuario'] = '{$a}';
+
+$string['selec_curso'] = 'Selecciona un curso';
+$string['selec_grupo'] = 'Selecciona un grupo formativo';
+$string['generar'] = 'Generar informe';

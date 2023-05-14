@@ -36,6 +36,8 @@ $PAGE->set_heading(get_string('pluginname', 'local_informe'));
 
 echo $OUTPUT->header();
 
+$cuerpoform = new \local_informe\form\cuerpo_form();
+
 if (isloggedin()) {
 
     echo get_string('subtitulo', 'local_informe');
@@ -45,4 +47,5 @@ if (isloggedin()) {
     echo userdate(time(), get_string('strftimedaydate', 'core_langconfig'));
 }
 
+$cuerpoform->display();
 echo $OUTPUT->footer();
