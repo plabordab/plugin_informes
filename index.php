@@ -23,6 +23,7 @@
  */
 
 require_once('../../config.php');
+require_once($CFG->dirroot. '/local/informe/lib.php');
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -35,27 +36,58 @@ $PAGE->set_title($SITE->fullname);
 $PAGE->set_heading(get_string('pluginname', 'local_informe'));
 
 require_login();
+
 if (isguestuser()) {
     throw new moodle_exception('noguest');
 }
+
 echo $OUTPUT->header();
 
 $allowgenerate = has_capability('local/informe:generarinforme', $context);
 
-$cuerpoform = new \local_informe\form\cuerpo_form();
-
-if (isloggedin()) {
-    echo get_string('subtitulo', 'local_informe');
-    echo '<br/>';
-    echo get_string('generadopor', 'local_informe', fullname($USER));
-    echo '<br/>Fecha: ';
-    echo userdate(time(), get_string('strftimedaydate', 'core_langconfig'));
-}
-
+// Se procesan y visualizan los formularios.
 if ($allowgenerate) {
 
+    $cuerpoform = new \local_informe\form\cuerpo_form();
 
     $cuerpoform->display();
+
+    // Si está el botón cancelar, maneja la operación de cancelación.
+    if ($cuerpoform->is_cancelled()) {
+
+        redirect($PAGE->url);
+
+        // Se procesan los datos validados. $mform->get_data() devuelve los datos introducidos.
+    } else if ($data = $cuerpoform->get_data()) {
+
+        // Select - devuelve la posición del array.
+        $numcurso = $data->selec_curso;
+        $numgrupo = $data->selec_grupo;
+
+        // Recuperamos consulta cursos para obtener id.
+        $cursos = get_cursos();
+        $idcursos = array();
+        foreach ($cursos as $c) {
+            $idcursos[] = $c->id;
+        }
+        $idcurso = $idcursos[$numcurso];
+
+        // Recuperamos consulta grupos para obtener id.
+        $grupos = get_grupos();
+        $idgrupos = array();
+        foreach ($grupos as $g) {
+            $idgrupos[] = $g->id;
+        }
+        $idgrupo = $idgrupos[$numgrupo];
+
+        require_capability('local/informe:generarinforme', $context);
+
+    } else {
+
+        // Visualizar formulario.
+        $this->content->text = $cuerpoform->render();
+    }
+
 }
 
 echo $OUTPUT->footer();

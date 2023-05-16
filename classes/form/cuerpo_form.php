@@ -32,15 +32,34 @@ class cuerpo_form extends \moodleform {
 
         $mform = $this->_form;
 
-        $mform->addElement('select', 'message', get_string('selec_curso', 'local_informe'));
-        $mform->setType('message', PARAM_TEXT);
+        // Recuperamos consulta cursos.
+        $cursos = get_cursos();
 
-        $mform->addElement('select', 'message', get_string('selec_grupo', 'local_informe'));
-        $mform->setType('message', PARAM_TEXT);
+        $opcursos = array();
 
-        $submitlabel = get_string('generar', 'local_informe');
+        foreach ($cursos as $c) {
+            $opcursos[] = $c->fullname;
+        }
 
-        $mform->addElement('submit', 'submitmessage', $submitlabel);
+        $mform->addElement('select', 'selec_curso', get_string('selec_curso', 'local_informe'), $opcursos);
+        $mform->setType('selec_curso', PARAM_INT);
+
+        // Recuperamos consulta grupos.
+        $grupos = get_grupos();
+
+        $opgrupos = array();
+
+        foreach ($grupos as $g) {
+            $opgrupos[] = $g->name;
+        }
+
+        $mform->addElement('select', 'selec_grupo', get_string('selec_grupo', 'local_informe'), $opgrupos);
+        $mform->setType('selec_grupo', PARAM_INT);
+
+        $buttonarray = array();
+        $buttonarray[] = $mform->createElement('submit', 'Submit', get_string('generar', 'local_informe'));
+        $buttonarray[] = $mform->createElement('cancel');
+        $mform->addgroup($buttonarray, 'buttonar', '', ' ', false);
 
     }
 }

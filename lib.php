@@ -51,3 +51,25 @@ function local_informe_extend_navigation(global_navigation $root) {
 
     $root->add_node($node);
 }
+
+/**
+ * Envía una consulta a la base de datos y devuelve todos los registros que coinciden con los requisitos de la consulta.
+ * @return Devuelve los registros de la base de datos como una matriz de objetos.
+ */
+function get_cursos() {
+    global $DB;
+
+    $cursos = $DB->get_records('course');
+    return $cursos;
+}
+
+/**
+ * Envía una consulta a la base de datos y devuelve todos los registros que coinciden con los requisitos de la consulta.
+ * @return Devuelve los registros de la base de datos como una matriz de objetos.
+ */
+function get_grupos() {
+    global $DB;
+
+    $grupos = $DB->get_records('groups');
+    return $grupos;
+}
