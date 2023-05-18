@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/informe/db" VERSION="20230518" COMMENT="XMLDB file for Moodle local/informe"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_informe" COMMENT="Tabla temporal para generar informes">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="nombre" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Nombre del alumno"/>
+        <FIELD NAME="apellido" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Apellido del alumno"/>
+        <FIELD NAME="curso" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Curso donde está matriculado el alumno"/>
+        <FIELD NAME="grupo" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Grupo formativo relativo al curso"/>
+        <FIELD NAME="duracion" TYPE="int" LENGTH="15" NOTNULL="true" SEQUENCE="false" COMMENT="Tiempo transcurrido por el alumno en el curso"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

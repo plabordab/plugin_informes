@@ -55,10 +55,15 @@ if ($allowgenerate) {
     // Si está el botón cancelar, maneja la operación de cancelación.
     if ($cuerpoform->is_cancelled()) {
 
-        redirect($PAGE->url);
+        $urlprincipal = new moodle_url('/', ['redirect' => 0]);
 
         // Se procesan los datos validados. $mform->get_data() devuelve los datos introducidos.
     } else if ($data = $cuerpoform->get_data()) {
+
+        require_capability('local/informe:generarinforme', $context);
+
+        // Primero vaciamos la tabla.
+        $DB->delete_records('local_informe');
 
         // Select - devuelve la posición del array.
         $numcurso = $data->selec_curso;
@@ -66,26 +71,54 @@ if ($allowgenerate) {
 
         // Recuperamos consulta cursos para obtener id.
         $cursos = get_cursos();
+        $nombrescursos = array();
         $idcursos = array();
         foreach ($cursos as $c) {
             $idcursos[] = $c->id;
+            $nombrescursos[] = $c->fullname;
         }
         $idcurso = $idcursos[$numcurso];
+        $nombrecurso = $nombrescursos[$numcurso];
 
         // Recuperamos consulta grupos para obtener id.
         $grupos = get_grupos();
-        $idgrupos = array();
+        $nombregrupos = array();
+        $idcursos = array();
         foreach ($grupos as $g) {
             $idgrupos[] = $g->id;
+            $nombregrupos[] = $g->name;
         }
         $idgrupo = $idgrupos[$numgrupo];
+        $nombregrupo = $nombregrupos[$numgrupo];
 
-        require_capability('local/informe:generarinforme', $context);
+        // Recuperamos consulta informe.
+        $informe = genera_informe($idcurso, $idgrupo);
+
+        foreach ($informe as $i) {
+
+            $registro = new stdClass;
+            // Pte: $registro->nombre = $nombre;.
+            $registro->nombre = '$nombre';
+            // Pte: $registro->apellido = $apellido;.
+            $registro->apellido = '$apellido';
+            $registro->curso = $nombrecurso;
+            $registro->grupo = $nombregrupo;
+            // Pte: $registro->duracion = $duracion;.
+            $registro->duracion = 1000000000;
+
+            // Rellenamos la tabla con los datos del nuevo informe.
+            $DB->insert_record('local_informe', $registro);
+
+        }
+
+        // Redirigimos a la página del informe para exportar a excel.
+        $url = new moodle_url('/local/informe/informe.php');
+        redirect($url);
 
     } else {
 
-        // Visualizar formulario.
-        $this->content->text = $cuerpoform->render();
+        // Visualizamos formulario.
+        $cuerpoform->render();
     }
 
 }

@@ -56,6 +56,23 @@ class cuerpo_form extends \moodleform {
         $mform->addElement('select', 'selec_grupo', get_string('selec_grupo', 'local_informe'), $opgrupos);
         $mform->setType('selec_grupo', PARAM_INT);
 
+        $mform->addElement('advcheckbox', 'nombre', get_string('check_nombre', 'local_informe'),
+                '', array('group' => 1), array(0, 1));
+        $mform->addElement('advcheckbox', 'apellido', get_string('check_apellido', 'local_informe'),
+                '', array('group' => 1), array(0, 1));
+        $mform->addElement('advcheckbox', 'curso', get_string('check_curso', 'local_informe'),
+                '', array('group' => 1), array(0, 1));
+        $mform->addElement('advcheckbox', 'grupo', get_string('check_grupo', 'local_informe'),
+                '', array('group' => 1), array(0, 1));
+        $mform->addElement('advcheckbox', 'duracion', get_string('check_duracion', 'local_informe'),
+                '', array('group' => 1), array(0, 1));
+
+        // Añadir un controlador de checkbox para todos los checkboxes en `group => 1`.
+        $this->add_checkbox_controller(
+                1,
+                get_string("checkbox", "local_informe")
+        );
+
         $buttonarray = array();
         $buttonarray[] = $mform->createElement('submit', 'Submit', get_string('generar', 'local_informe'));
         $buttonarray[] = $mform->createElement('cancel');

@@ -73,3 +73,30 @@ function get_grupos() {
     $grupos = $DB->get_records('groups');
     return $grupos;
 }
+
+/**
+ * Envía una consulta a la base de datos y devuelve todos los registros que coinciden con los requisitos de la consulta.
+ * @param $curso recibe el id del curso seleccionado.
+ * @param $grupo recibe el id del grupo seleccionado.
+ * @return Devuelve los registros de la base de datos como una matriz de objetos.
+ */
+function genera_informe($curso, $grupo) {
+    global $DB;
+
+    $query = "SELECT * FROM `mdl_user_lastaccess`";
+
+    $query2 = "SELECT u.username, u.lastname, c.fullname, g.name, ul.timeaccess
+                  FROM `mdl_user_lastaccess` ul
+                        INNER JOIN `mdl_user` u ON u.id = ul.userid
+                        INNER JOIN `mdl_groups_members` gm ON gm.userid = u.id
+                        INNER JOIN `mdl_groups` g ON g.id = gm.groupid
+                        INNER JOIN `mdl_course` c ON g.courseid = c.id
+                            WHERE c.id = $curso
+                                AND g.id = $grupo
+                                AND ul.timeaccess IS NOT NULL
+                                    ORDER BY u.lastname ASC;";
+
+    $informe = $DB->get_records_sql($query);
+    return $informe;
+
+}

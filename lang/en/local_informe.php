@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['pluginname'] = 'Informe Específico';
+$string['pluginname'] = 'Informe de Tiempo';
 $string['subtitulo'] = 'Informe de duración del curso por Grupo Formativo';
 $string['generadopor'] = 'Generado por: {$a}.';
 
@@ -37,4 +37,11 @@ $string['selec_grupo'] = 'Selecciona un grupo formativo';
 $string['generar'] = 'Generar informe';
 
 $string['informe:generarinforme'] = 'Generar informe de duración y grupo formativo';
+
+$string['check_nombre'] = 'Nombre del alumno';
+$string['check_apellido'] = 'Apellidos del alumno';
+$string['check_curso'] = 'Curso del alumno';
+$string['check_grupo'] = 'Grupo Formativo del curso';
+$string['check_duracion'] = 'Duración del curso por alumno';
+$string['checkbox'] = 'Seleccionar todos/ninguno';
 
