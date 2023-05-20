@@ -22,16 +22,16 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once('../../config.php');
+require_once($CFG->dirroot . '/local/informe/lib.php');
 
 // Permite que se genere el archivo de Excel.
-header("Content-Type: application/xls");
-header("Content-Disposition: attachment; filename=informe_" . date('Y:m:d:m:s').".xls");
+$filename = "informe_" . date('Y:m:d:m:s') . ".xls";
+
+header('Content-type: application/vnd.ms-excel');
+header("Content-Disposition: attachment; filename=$filename");
 header("Pragma: no-cache");
 header("Expires: 0");
-
-require_once('../../config.php');
-require_once($CFG->dirroot. '/local/informe/lib.php');
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -49,64 +49,34 @@ if (isguestuser()) {
     throw new moodle_exception('noguest');
 }
 
-echo $OUTPUT->header();
+// Obtenemos los registros.
+$informe = $DB->get_records('local_informe');
 
-$allowgenerate = has_capability('local/informe:generarinforme', $context);
+echo html_writer::start_tag('table');
+echo html_writer::start_tag('tr');
+echo html_writer::tag('th', 'Nombre');
+echo html_writer::end_tag('th');
+echo html_writer::tag('th', 'Apellido');
+echo html_writer::end_tag('th');
+echo html_writer::tag('th', 'Curso');
+echo html_writer::end_tag('th');
+echo html_writer::tag('th', 'Grupo');
+echo html_writer::end_tag('th');
+echo html_writer::end_tag('tr');
 
-// Se procesan y visualizan los formularios.
-if ($allowgenerate) {
+foreach ($informe as $i) {
 
-    $cuerpoform = new \local_informe\form\cuerpo_form();
-    $tabla = "";
-
-    if ($data = $cuerpoform->get_data()) {
-
-        require_capability('local/informe:generarinforme', $context);
-
-        $sql = "SELECT * FROM {local_informes}";
-
-        $userfields = \core_user\fields::for_name()->with_identity($context);
-        $userfieldssql = $userfields->get_sql('u');
-
-        $sql2 = "SELECT m.id, m.message, m.timecreated, m.userid {$userfieldssql->selects}
-                FROM {local_greetings_messages} m
-                LEFT JOIN {user} u ON u.id = m.userid
-                  ORDER BY timecreated DESC";
-
-        $informe = $DB->get_records_sql($sql);
-
-            $tabla .= "
-			<table>
-				<thead>
-					<tr>
-						<th>Nombre</th>
-						<th>Apellido</th>
-						<th>Curso</th>
-						<th>Grupo</th>
-						<th>Duración</th>
-					</tr>
-				<tbody>
-		";
-
-        foreach ($informe as $i) {
-
-            $tabla .= "
-					<tr>
-						<td>".$i->nombre."</td>
-						<td>".$i->apellido."</td>
-						<td>".$i->curso."</td>
-						<td>".$i->grupo."</td>
-						<td>".$i->duracion."</td>
-					</tr>
-		";
-
-        }
-        $tabla .= "
-                </tbody>
-            </table>";
-
-    }
+    echo html_writer::start_tag('tr');
+    echo html_writer::tag('td', $i->nombre);
+    echo html_writer::end_tag('td');
+    echo html_writer::tag('td', $i->apellido);
+    echo html_writer::end_tag('td');
+    echo html_writer::tag('td', $i->curso);
+    echo html_writer::end_tag('td');
+    echo html_writer::tag('td', $i->grupo);
+    echo html_writer::end_tag('td');
+    echo html_writer::end_tag('tr');
 
 }
 
-echo $OUTPUT->footer();
+echo html_writer::end_tag('table');

@@ -22,6 +22,7 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Acceso prohibido desde URL.
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_informe';

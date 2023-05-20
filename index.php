@@ -55,7 +55,7 @@ if ($allowgenerate) {
     // Si está el botón cancelar, maneja la operación de cancelación.
     if ($cuerpoform->is_cancelled()) {
 
-        $urlprincipal = new moodle_url('/', ['redirect' => 0]);
+        $urlprincipal = new moodle_url('/');
 
         // Se procesan los datos validados. $mform->get_data() devuelve los datos introducidos.
     } else if ($data = $cuerpoform->get_data()) {
@@ -97,14 +97,10 @@ if ($allowgenerate) {
         foreach ($informe as $i) {
 
             $registro = new stdClass;
-            // Pte: $registro->nombre = $nombre;.
-            $registro->nombre = '$nombre';
-            // Pte: $registro->apellido = $apellido;.
-            $registro->apellido = '$apellido';
-            $registro->curso = $nombrecurso;
-            $registro->grupo = $nombregrupo;
-            // Pte: $registro->duracion = $duracion;.
-            $registro->duracion = 1000000000;
+            $registro->nombre = $i->nombre;
+            $registro->apellido = $i->apellido;
+            $registro->curso = $i->curso;;
+            $registro->grupo = $i->grupo;;
 
             // Rellenamos la tabla con los datos del nuevo informe.
             $DB->insert_record('local_informe', $registro);
@@ -112,7 +108,7 @@ if ($allowgenerate) {
         }
 
         // Redirigimos a la página del informe para exportar a excel.
-        $url = new moodle_url('/local/informe/informe.php');
+        $url = new moodle_url('./informe.php');
         redirect($url);
 
     } else {
