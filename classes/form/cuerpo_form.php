@@ -57,12 +57,12 @@ class cuerpo_form extends \moodleform {
         $mform->setType('selec_grupo', PARAM_INT);
 
         $radioarray = array();
-        $radioarray[] = $mform->createElement('radio', 'radio', get_string('informe1', 'local_informe'), 0);
-        $radioarray[] = $mform->createElement('radio', 'radio', get_string('informe2', 'local_informe'), 0);
-        $radioarray[] = $mform->createElement('radio', 'radio', get_string('informe3', 'local_informe'), 0);
-        $radioarray[] = $mform->createElement('radio', 'radio', get_string('informe4', 'local_informe'), 0);
-        $radioarray[] = $mform->createElement('radio', 'radio', get_string('informe5', 'local_informe'), 0);
-        $radioarray[] = $mform->createElement('radio', 'radio', get_string('informe6', 'local_informe'), 0);
+        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe1', 'local_informe'), 0);
+        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe2', 'local_informe'), 0);
+        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe3', 'local_informe'), 0);
+        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe4', 'local_informe'), 0);
+        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe5', 'local_informe'), 0);
+        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe6', 'local_informe'), 0);
 
         $mform->addGroup($radioarray, 'radio', get_string('radio', 'local_informe'), '<br>');
 
