@@ -38,11 +38,13 @@ class cuerpo_form extends \moodleform {
         $opcursos = array();
 
         foreach ($cursos as $c) {
+
             $opcursos[] = $c->fullname;
         }
 
         $mform->addElement('select', 'selec_curso', get_string('selec_curso', 'local_informe'), $opcursos);
         $mform->setType('selec_curso', PARAM_INT);
+
 
         // Recuperamos consulta grupos.
         $grupos = get_grupos();
@@ -61,8 +63,6 @@ class cuerpo_form extends \moodleform {
         $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe2', 'local_informe'), 0);
         $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe3', 'local_informe'), 0);
         $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe4', 'local_informe'), 0);
-        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe5', 'local_informe'), 0);
-        $radioarray[] = $mform->createElement('radio', 'radio_info', get_string('informe6', 'local_informe'), 0);
 
         $mform->addGroup($radioarray, 'radio', get_string('radio', 'local_informe'), '<br>');
 

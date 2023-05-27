@@ -63,10 +63,13 @@ function get_cursos() {
     return $cursos;
 }
 
+
 /**
  * Envía una consulta a la base de datos y devuelve todos los registros que coinciden con los requisitos de la consulta.
  * @return Devuelve los registros de la base de datos como una matriz de objetos.
  */
+
+
 function get_grupos() {
     global $DB;
 

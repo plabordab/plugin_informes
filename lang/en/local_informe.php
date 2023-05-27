@@ -50,7 +50,5 @@ $string['ayuda'] = 'Elegir Informe de grupo';
 
 $string['informe1'] = 'Informe de actividad';
 $string['informe2'] = 'Informe de calificaciones';
-$string['informe3'] = 'Informe de desempeño';
-$string['informe4'] = 'Informe de participación';
-$string['informe5'] = 'Informe de progreso';
-$string['informe6'] = 'Informe general';
+$string['informe3'] = 'Informe de progreso';
+$string['informe4'] = 'Informe general';
